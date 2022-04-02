@@ -270,6 +270,6 @@ void bar(void) {
 } 
 ```
 
-有了 Read Barrier 后，CPU 1 读到 b 为 0后，标记所有 Invalidate Queue 上的 Cache Line 继续运行。下一个操作是读 a 当前值，于是开始等所有被标记的 Cache Line 真的被 Invalidate 掉，此时再读 a 发现 a 是 `Invalidate` 状态，于是发送 `Read` 到 CPU 0，拿到 a 所在 Cache Line 最新值，assert 成功。
+有了 Read Barrier 后，CPU 1 读到 b 为 1后，标记所有 Invalidate Queue 上的 Cache Line 继续运行。下一个操作是读 a 当前值，于是开始等所有被标记的 Cache Line 真的被 Invalidate 掉，此时再读 a 发现 a 是 `Invalidate` 状态，于是发送 `Read` 到 CPU 0，拿到 a 所在 Cache Line 最新值，assert 成功。
 
 除了 Read Barrier 和 Write Barrier 外还有合二为一的 Barrier。作用是让后续写操作全部先去 Store Buffer 排队，让后续读操作都得先等 Invalidate Queue 处理完。

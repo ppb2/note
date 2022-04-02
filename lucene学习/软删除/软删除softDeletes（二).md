@@ -10,7 +10,7 @@
 
 图1：
 
-![img](https://raw.githubusercontent.com/ppb2/note/main/imgs/1.png)
+![image-20220323224016362](https://raw.githubusercontent.com/ppb2/note/main/imgs/image-20220323224016362.png)
 
   上图中的四种删除信息通过IndexWriter类中提供的方法生成：
 
@@ -64,13 +64,13 @@
 
 图5：
 
-![img](https://raw.githubusercontent.com/ppb2/note/main/imgs/5.png)
+![img](http://www.amazingkoala.com.cn/uploads/lucene/index/软删除softDeletes/软删除softDeletes（二）/5.png)
 
   我们接着继续介绍为什么numericUpdates容器的value是一个LinkedHashMap结构，先给出源码中对这种设计的注释：
 
 图6：
 
-![img](https://raw.githubusercontent.com/ppb2/note/main/imgs/6.png)
+![img](http://www.amazingkoala.com.cn/uploads/lucene/index/软删除softDeletes/软删除softDeletes（二）/6.png)
 
   注释中讲述了使用LinkedHashMap结构的两个原因：
 
@@ -81,7 +81,7 @@
 
 图7：
 
-![img](http://www.amazingkoala.com.cn/uploads/lucene/index/软删除softDeletes/软删除softDeletes（二）/7.png)
+![img](https://raw.githubusercontent.com/ppb2/note/main/imgs/7.png)
 
   图7中，第56、61行执行了两次软删除操作，并且文档0都满足这两个软删除的条件，由于第61行的软删除操作晚于第56行，所以文档0将用61行中的域名为"softDeleteField"、域值为4的NumericDocValues来描述它被软删除了，至于使用这个DocValues来描述被软删除的用途，将在后面的文章中介绍。
 
@@ -99,7 +99,7 @@
 
 图9：
 
-![img](http://www.amazingkoala.com.cn/uploads/lucene/index/软删除softDeletes/软删除softDeletes（二）/9.png)
+![img](https://raw.githubusercontent.com/ppb2/note/main/imgs/9.png)
 
 图10：
 
@@ -119,11 +119,10 @@
 
 图12：
 
-![img](http://www.amazingkoala.com.cn/uploads/lucene/index/软删除softDeletes/软删除softDeletes（二）/12.png)
+![img](https://raw.githubusercontent.com/ppb2/note/main/imgs/12.png)
 
-  可见，文档1并没有被软删除，图11的demo看这里：https://github.com/LuXugang/Lucene-7.5.0/blob/master/LuceneDemo/src/main/java/lucene/softDeletes/SoftDeletesTest3.java 。
+  可见，文档1并没有被软删除，
 
 ## 结语
 
   本文中，我们介绍了Lucene7.5.0版本中，在索引期间跟软删除相关的一些内容，即使用numericUpdates、binaryUpdate两个容器存储删除信息，然而在Lucene8.4.0中，取消了这两个容器，使用了其他的方法存储删除信息，这块内容将在下篇文章中展开。
-
